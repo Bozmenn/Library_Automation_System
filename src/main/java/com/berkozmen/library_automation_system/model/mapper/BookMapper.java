@@ -1,6 +1,6 @@
 package com.berkozmen.library_automation_system.model.mapper;
 
-import com.berkozmen.library_automation_system.model.Book;
+import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.dto.BookDTO;
 
 public class BookMapper {
@@ -11,7 +11,8 @@ public class BookMapper {
         bookDTO.setAuthor(book.getAuthor());
         bookDTO.setISBN(book.getISBN());
         bookDTO.setPublisher(book.getPublisher());
-        bookDTO.setPublishedDate(bookDTO.getPublishedDate());
+        bookDTO.setPublishedDate(book.getPublishedDate());
+        bookDTO.setRating(book.getRating());
         return bookDTO;
     }
 
@@ -22,6 +23,7 @@ public class BookMapper {
         book.setISBN(bookDTO.getISBN());
         book.setPublisher(bookDTO.getPublisher());
         book.setPublishedDate(bookDTO.getPublishedDate());
+        book.setRating(bookDTO.getRating());
         return book;
     }
 

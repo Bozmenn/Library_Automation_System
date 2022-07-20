@@ -10,5 +10,6 @@ public class BookDTO {
     private long ISBN;
     private String publisher;
     private String publishedDate;
+    private int rating;
 
 }
