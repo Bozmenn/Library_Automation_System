@@ -49,13 +49,14 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body("Related book deleted succesfully");
     }
 
-    /*@PutMapping("/{title}")
+    @PutMapping("/{title}")
     public ResponseEntity updateBook(
             @PathVariable String title,
-            @RequestBody BookDTO)
+            @RequestBody BookDTO bookDTO)
     {
-        bookService.
-    }*/
+        bookService.update(title, bookDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("Book succesfully updated");
+    }
 
 
 
