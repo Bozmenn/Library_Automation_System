@@ -1,8 +1,8 @@
 package com.berkozmen.library_automation_system.security;
 
 
-import com.todeb.rsakin.coursemanagementapplication.exception.CustomJwtException;
-import com.todeb.rsakin.coursemanagementapplication.model.entity.Role;
+import com.berkozmen.library_automation_system.exception.CustomJwtException;
+import com.berkozmen.library_automation_system.model.entity.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

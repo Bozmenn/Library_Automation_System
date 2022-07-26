@@ -1,5 +1,6 @@
 package com.berkozmen.library_automation_system.exception.handler;
 
+import com.berkozmen.library_automation_system.exception.CustomJwtException;
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,13 @@ public class GenericExceptionHandler {
         Map<String, String > errorResponseMap = new HashMap<>();
         errorResponseMap.put("error_message",exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseMap);
+    }
+
+    @ExceptionHandler(CustomJwtException.class)
+    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(CustomJwtException exception){
+        Map<String, String > errorResponseMap = new HashMap<>();
+        errorResponseMap.put("error_message",exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseMap);
     }
 
     @ExceptionHandler(Exception.class)

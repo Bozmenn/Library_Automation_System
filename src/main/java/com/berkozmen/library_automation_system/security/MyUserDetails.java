@@ -1,7 +1,7 @@
 package com.berkozmen.library_automation_system.security;
 
-import com.todeb.rsakin.coursemanagementapplication.model.entity.User;
-import com.todeb.rsakin.coursemanagementapplication.repository.UserRepository;
+import com.berkozmen.library_automation_system.model.entity.User;
+import com.berkozmen.library_automation_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
