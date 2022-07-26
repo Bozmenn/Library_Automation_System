@@ -7,7 +7,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 @Data
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@MappedSuperclass
 public abstract class Person {
 
     private String name;

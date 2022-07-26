@@ -16,6 +16,7 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private Long id;
     private String title;
     private String author;
@@ -24,9 +25,6 @@ public class Book {
     private String publisher;
     private String publishedDate;
 
-    @ManyToOne()
-    @JoinColumn(name = "book_id")
-    private User user;
 
 
 

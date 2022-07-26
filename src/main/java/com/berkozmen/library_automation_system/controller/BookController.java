@@ -20,13 +20,10 @@ public class BookController {
     public ResponseEntity getAllBooks(){
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable(name = "id") Long id){
-        try {
-            Book byId = bookService.getById(id);
-        }catch (RuntimeException exception){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity getBookById(@PathVariable(name = "id") Long id){
+        Book byId = bookService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getById(id));
     }
 
@@ -41,15 +38,11 @@ public class BookController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteBook(@PathVariable(name = "id") Long id){
-        try {
-            bookService.delete(id);
-        }catch (RuntimeException exception){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        bookService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Related book deleted succesfully");
     }
 
-    @PutMapping("/{title}")
+    @PutMapping("/update/{title}")
     public ResponseEntity updateBook(
             @PathVariable String title,
             @RequestBody BookDTO bookDTO)
@@ -57,7 +50,5 @@ public class BookController {
         bookService.update(title, bookDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Book succesfully updated");
     }
-
-
 
 }

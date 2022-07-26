@@ -1,5 +1,6 @@
 package com.berkozmen.library_automation_system.service;
 
+import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
 import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.mapper.BookMapper;
@@ -24,7 +25,7 @@ public class BookService {
 
     public Book getById(Long id){
        Optional<Book> byId = bookRepository.findById(id);
-       return byId.orElseThrow(()->new RuntimeException());
+       return byId.orElseThrow(()->new EntityNotFoundException("Book"));
     }
 
 
@@ -43,7 +44,7 @@ public class BookService {
     public Book update(String title, BookDTO bookDTO){
         Optional<Book> bookByTitle = bookRepository.findBookByTitle(title);
         if(!bookByTitle.isPresent()){
-            throw new RuntimeException("Could not found !");
+            throw new EntityNotFoundException("Book");
         }
         Book updatedBook = bookByTitle.get();
         if(!StringUtils.isEmpty(bookDTO.getTitle())){
