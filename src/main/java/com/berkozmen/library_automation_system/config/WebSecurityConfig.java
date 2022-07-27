@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // Disable CSRF (cross site request forgery)
+        // Disable CSRF (cross site request forgery) ATTACK TYPE !!
         http.csrf().disable();
 
         // No session will be created or used by spring security

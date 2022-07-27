@@ -29,11 +29,18 @@ public class User {
     @Size(min = 5, message = "Minimum password length: 5 characters")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     public List<Role> roles;
+    @OneToMany
+    private List<BookRequest> bookRequests;
+    @OneToMany
+    private List<BookReservation> bookReservations;
+    @OneToMany
+    @JoinColumn(name = "feedback_id", referencedColumnName = "id")
+    private List<BookFeedback> bookFeedbacks;
 
 }

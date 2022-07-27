@@ -6,6 +6,7 @@ import com.berkozmen.library_automation_system.model.dto.UserLoginDTO;
 import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAll();
@@ -42,7 +43,7 @@ public class UserController {
         return userService.signup(user);
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RolesAllowed("ROLE_ADMIN")
     @DeleteMapping(value = "/delete/{username}")
     public String delete(@PathVariable String username) {

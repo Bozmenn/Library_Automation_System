@@ -2,6 +2,8 @@ package com.berkozmen.library_automation_system.model.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class BookDTO {
 
@@ -9,7 +11,7 @@ public class BookDTO {
     private String author;
     private long ISBN;
     private String publisher;
-    private String publishedDate;
+    private Date publishedDate;
     private int rating;
 
 }

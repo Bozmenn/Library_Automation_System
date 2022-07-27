@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -23,7 +24,7 @@ public class Book {
     private int rating;
     private long ISBN;
     private String publisher;
-    private String publishedDate;
+    private Date publishedDate;
 
 
 

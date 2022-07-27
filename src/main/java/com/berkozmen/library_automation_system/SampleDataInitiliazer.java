@@ -18,8 +18,8 @@ import java.util.Arrays;
 public class SampleDataInitiliazer implements ApplicationRunner {
 
     private final RoleRepository roleRepository;
-    //private final UserRepository userRepository;
-    //private final UserService userService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -28,10 +28,8 @@ public class SampleDataInitiliazer implements ApplicationRunner {
         adminRole.setName("ROLE_ADMIN");
         Role userRole = new Role();
         userRole.setName("ROLE_USER");
-        roleRepository.save(adminRole);
-        roleRepository.save(userRole);
 
-        /*// Creating ADMIN & USER roles
+        // Creating ADMIN & USER roles
         Role savedAdminRole = null;
         if (!roleRepository.existsByName(adminRole.getName())) {
             savedAdminRole = roleRepository.save(adminRole);
@@ -42,7 +40,8 @@ public class SampleDataInitiliazer implements ApplicationRunner {
         }
 
         // Creating a sample Admin USER
-        User adminUser = new User(null, "admin-user", "admin@mail.com", "pass1234", Arrays.asList(savedAdminRole));
+        User adminUser = new User(null, "admin-user", "admin@mail.com", "pass1234",
+                Arrays.asList(savedAdminRole));
         if (!userRepository.existsByUsername(adminUser.getUsername())) {
             userService.signup(adminUser);
         }
@@ -52,7 +51,7 @@ public class SampleDataInitiliazer implements ApplicationRunner {
                 Arrays.asList(savedUserRole));
         if (!userRepository.existsByUsername(sampleUser.getUsername())) {
             userService.signup(sampleUser);
-        }*/
+        }
 
     }
 
