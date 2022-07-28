@@ -7,6 +7,7 @@ import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/users")
+@Transactional
 public class UserController {
 
     @Autowired
@@ -51,10 +53,5 @@ public class UserController {
         return username;
     }
 
-//    @GetMapping(value = "/me")
-//    public UserResponseDTO whoami(HttpServletRequest req) {
-//
-//        return modelMapper.map(userService.whoami(req), UserResponseDTO.class);
-//    }
 
 }

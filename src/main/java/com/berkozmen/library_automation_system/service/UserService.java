@@ -85,11 +85,5 @@ public class UserService {
         return user;
     }
 
-    /*public User whoami(HttpServletRequest req) {
-        return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
-    }*/
 
-/*    public String refresh(String username) {
-        return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
-    }*/
 }
