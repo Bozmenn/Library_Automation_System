@@ -35,12 +35,12 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     public List<Role> roles;
-    @OneToMany
-    private List<BookRequest> bookRequests;
+/*    @OneToMany
+    private List<BookRequest> bookRequests;*/
     @OneToMany
     private List<BookReservation> bookReservations;
-    @OneToMany
+/*    @OneToMany
     @JoinColumn(name = "feedback_id", referencedColumnName = "id")
-    private List<BookFeedback> bookFeedbacks;
+    private List<BookFeedback> bookFeedbacks;*/
 
 }

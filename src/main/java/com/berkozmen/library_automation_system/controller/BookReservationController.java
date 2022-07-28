@@ -1,7 +1,10 @@
 package com.berkozmen.library_automation_system.controller;
 
 import com.berkozmen.library_automation_system.model.dto.BookDTO;
+import com.berkozmen.library_automation_system.model.dto.BookReservationDTO;
 import com.berkozmen.library_automation_system.model.entity.Book;
+import com.berkozmen.library_automation_system.model.entity.BookReservation;
+import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.repository.BookReservationRepository;
 import com.berkozmen.library_automation_system.service.BookReservationService;
 import com.berkozmen.library_automation_system.service.UserService;
@@ -17,41 +20,44 @@ public class BookReservationController {
     @Autowired
     private BookReservationService bookReservationService;
 
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping("")
     public ResponseEntity getAllBookReservations(){
         return ResponseEntity.status(HttpStatus.OK).body(bookReservationService.getAllBookReservations());
     }
 
-/*    @GetMapping("/{id}")
-    public ResponseEntity getBookReservationById(@PathVariable(name = "id") Long id){
-        bookReservationService.get
-        bookService.getById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(bookService.getById(id));
-    }*/
+    @GetMapping("/{user_name}")
+    public ResponseEntity getBookReservationByUserName(@PathVariable(name = "user_name") String user_name){
+        User foundUser = userService.search(user_name);
+        BookReservation byUserId = bookReservationService.getByUserId(foundUser.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(byUserId);
+    }
 
-/*    @PostMapping("/create")
-    public ResponseEntity createNewBook(@RequestBody BookDTO bookDTO){
-        Book respBook = bookService.create(bookDTO);
-        if(respBook == null){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Book could not created");
+    @PostMapping("/create")
+    public ResponseEntity createNewBookReservation(@RequestBody BookReservationDTO bookReservationDTO){
+        BookReservation bookReservation = bookReservationService.create(bookReservationDTO);
+        if(bookReservation == null){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Book reservation could not created");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Book successfully created");
-    }*/
+        return ResponseEntity.status(HttpStatus.CREATED).body("Book reservation successfully created");
+    }
 
-/*    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteBook(@PathVariable(name = "id") Long id){
-        bookService.delete(id);
+        bookReservationService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Related book deleted succesfully");
     }
 
-    @PutMapping("/update/{title}")
+    @PutMapping("/update/{id}")
     public ResponseEntity updateBook(
-            @PathVariable String title,
-            @RequestBody BookDTO bookDTO)
+            @PathVariable Long id,
+            @RequestBody BookReservationDTO bookReservationDTO)
     {
-        bookService.update(title, bookDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("Book succesfully updated");
-    }*/
+        bookReservationService.update(id, bookReservationDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("Book reservation succesfully updated");
+    }
 
 }

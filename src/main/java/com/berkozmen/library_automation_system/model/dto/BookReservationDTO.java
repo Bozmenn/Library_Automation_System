@@ -11,10 +11,9 @@ import java.util.Date;
 @Data
 public class BookReservationDTO {
 
-    private User user;
-    private Book book;
-    private Date startDate;
-    private Date endDatePlanned;
-    private Date endDateActual;
+    private Long user_id;
+    private Long book_id;
+    private String endDatePlanned;
+
 
 }

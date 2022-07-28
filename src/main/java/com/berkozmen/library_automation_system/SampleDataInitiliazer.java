@@ -41,14 +41,14 @@ public class SampleDataInitiliazer implements ApplicationRunner {
 
         // Creating a sample Admin USER
         User adminUser = new User(null, "admin-user", "admin@mail.com", "pass1234",
-                Arrays.asList(savedAdminRole));
+                Arrays.asList(savedAdminRole),null);
         if (!userRepository.existsByUsername(adminUser.getUsername())) {
             userService.signup(adminUser);
         }
 
         // Creating a sample USER
         User sampleUser = new User(null, "sample-user", "sample@mail.com", "pass1234",
-                Arrays.asList(savedUserRole));
+                Arrays.asList(savedUserRole),null);
         if (!userRepository.existsByUsername(sampleUser.getUsername())) {
             userService.signup(sampleUser);
         }

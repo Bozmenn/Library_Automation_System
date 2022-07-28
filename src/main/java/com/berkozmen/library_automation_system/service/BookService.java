@@ -28,6 +28,11 @@ public class BookService {
        return byId.orElseThrow(()->new EntityNotFoundException("Book"));
     }
 
+    public Book getByTitle(String title){
+        Optional<Book> byId = bookRepository.findBookByTitle(title);
+        return byId.orElseThrow(()->new EntityNotFoundException("Book"));
+    }
+
 
     public Book create(BookDTO bookDTO){
         Book book = BookMapper.toEntity(bookDTO);

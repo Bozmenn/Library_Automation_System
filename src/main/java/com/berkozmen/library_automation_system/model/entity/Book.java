@@ -27,7 +27,4 @@ public class Book {
     private Date publishedDate;
 
 
-
-
-
 }

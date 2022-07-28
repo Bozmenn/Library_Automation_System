@@ -2,10 +2,12 @@ package com.berkozmen.library_automation_system.service;
 
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
 import com.berkozmen.library_automation_system.model.dto.BookDTO;
+import com.berkozmen.library_automation_system.model.dto.BookReservationDTO;
 import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.entity.BookReservation;
 import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.model.mapper.BookMapper;
+import com.berkozmen.library_automation_system.model.mapper.BookReservationMapper;
 import com.berkozmen.library_automation_system.repository.BookReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,12 @@ public class BookReservationService {
 
     @Autowired
     private BookReservationRepository bookReservationRepository;
+    @Autowired
+    private BookReservationMapper bookReservationMapper;
+
+    @Autowired
+    private BookService bookService;
+
 
     public List<BookReservation> getAllBookReservations(){
         List<BookReservation> all = bookReservationRepository.findAll();
@@ -31,39 +39,33 @@ public class BookReservationService {
         return byId.orElseThrow(()->new EntityNotFoundException("Book reservation"));
     }
 
+    public BookReservation getByUserId(Long user_id){
+        Optional<BookReservation> bookReservationByUserId = bookReservationRepository.findBookReservationByUserId(user_id);
+        return bookReservationByUserId.orElseThrow(()->new EntityNotFoundException("Book reservation"));
+    }
 
-/*    public BookReservation create(BookDTO bookDTO){
-        Book book = BookMapper.toEntity(bookDTO);
-        Book save = bookRepository.save(book);
+
+    public BookReservation create(BookReservationDTO bookReservationDTO){
+        BookReservation bookReservation = bookReservationMapper.toEntity(bookReservationDTO);
+        BookReservation save = bookReservationRepository.save(bookReservation);
         return save;
-
     }
 
     public void delete(Long id){
         getById(id);
-        bookRepository.deleteById(id);
+        bookReservationRepository.deleteById(id);
     }
 
-    public Book update(String title, BookDTO bookDTO){
-        Optional<Book> bookByTitle = bookRepository.findBookByTitle(title);
-        if(!bookByTitle.isPresent()){
-            throw new EntityNotFoundException("Book");
+    public BookReservation update(Long id, BookReservationDTO bookReservationDTO){
+        BookReservation updatedBookReservation = getById(id);
+        if(!StringUtils.isEmpty(bookReservationDTO.getBook_id())) {
+            updatedBookReservation.setBook(bookService.getById(bookReservationDTO.getBook_id()));
+        }if(!StringUtils.isEmpty(bookReservationDTO.getEndDatePlanned())) {
+            updatedBookReservation.setEndDatePlanned(bookReservationDTO.getEndDatePlanned());
         }
-        Book updatedBook = bookByTitle.get();
-        if(!StringUtils.isEmpty(bookDTO.getTitle())){
-            updatedBook.setTitle(bookDTO.getTitle());
-        }if(!StringUtils.isEmpty(bookDTO.getAuthor())){
-            updatedBook.setAuthor(bookDTO.getAuthor());
-        }if(!StringUtils.isEmpty(bookDTO.getISBN())){
-            updatedBook.setISBN(bookDTO.getISBN());
-        }if(!StringUtils.isEmpty(bookDTO.getPublisher())){
-            updatedBook.setPublisher(bookDTO.getPublisher());
-        }if(!StringUtils.isEmpty(bookDTO.getPublishedDate())){
-            updatedBook.setPublishedDate(bookDTO.getPublishedDate());
-        }
-        return bookRepository.save(updatedBook);
+        return bookReservationRepository.save(updatedBookReservation);
 
-    }*/
+    }
 
 
 

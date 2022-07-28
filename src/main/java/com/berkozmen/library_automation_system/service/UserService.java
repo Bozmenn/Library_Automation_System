@@ -1,6 +1,8 @@
 package com.berkozmen.library_automation_system.service;
 
 import com.berkozmen.library_automation_system.exception.CustomJwtException;
+import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
+import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.repository.RoleRepository;
 import com.berkozmen.library_automation_system.repository.UserRepository;
@@ -17,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,19 +34,15 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
 
-    //    @PostConstruct
-//    private void postConstruct() {
-//        // Sample test admin user insert
-//        User admin = new User();
-//        admin.setUsername("admin-rmzn");
-//        admin.setPassword("pass12345");
-//        admin.setEmail("admin@email.com");
-//        admin.setRoles(Collections.singletonList(roleRepository.getById(1)));
-//        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-//        userRepository.save(admin);
-//    }
+
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+
+    public User getById(Long id){
+        Optional<User> byId = userRepository.findById(id);
+        return byId.orElseThrow(()->new EntityNotFoundException("User"));
     }
 
     public String signin(String username, String password) {
@@ -86,11 +85,11 @@ public class UserService {
         return user;
     }
 
-    public User whoami(HttpServletRequest req) {
+    /*public User whoami(HttpServletRequest req) {
         return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
-    }
+    }*/
 
-    public String refresh(String username) {
+/*    public String refresh(String username) {
         return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
-    }
+    }*/
 }

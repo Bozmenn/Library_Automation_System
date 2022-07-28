@@ -1,6 +1,7 @@
 package com.berkozmen.library_automation_system.model.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,8 +21,10 @@ public class BookReservation {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id",referencedColumnName = "book_id")
     private Book book;
+    @Column(nullable = false)
+    @CreationTimestamp
     private Date startDate;
-    private Date endDatePlanned;
+    private String endDatePlanned;
     private Date endDateActual;
 
 }

@@ -27,6 +27,12 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getById(id));
     }
 
+    @GetMapping("/{title}")
+    public ResponseEntity getBookById(@PathVariable(name = "title") String title){
+        Book byId = bookService.getByTitle(title);
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.getByTitle(title));
+    }
+
     @PostMapping("/create")
     public ResponseEntity createNewBook(@RequestBody BookDTO bookDTO){
         Book respBook = bookService.create(bookDTO);
