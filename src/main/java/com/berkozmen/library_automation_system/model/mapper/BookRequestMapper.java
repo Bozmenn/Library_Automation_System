@@ -27,7 +27,6 @@ public class BookRequestMapper {
         bookRequest.setUser(userService.getById(bookRequestDTO.getUser_id()));
         bookRequest.setRequestedBookTitle(bookRequestDTO.getRequestedBookTitle());
         bookRequest.setRequestedBookAuthor(bookRequestDTO.getRequestedBookAuthor());
-
         return bookRequest;
     }
 }
