@@ -2,9 +2,8 @@ package com.berkozmen.library_automation_system.service;
 
 import com.berkozmen.library_automation_system.exception.CustomJwtException;
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
-import com.berkozmen.library_automation_system.model.entity.Book;
+import com.berkozmen.library_automation_system.model.entity.Role;
 import com.berkozmen.library_automation_system.model.entity.User;
-import com.berkozmen.library_automation_system.repository.RoleRepository;
 import com.berkozmen.library_automation_system.repository.UserRepository;
 import com.berkozmen.library_automation_system.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +23,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    private final RoleRepository roleRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -54,14 +50,11 @@ public class UserService {
         }
     }
 
-    public String signup(User user) {
+    public String signup(User user, boolean isAdmin) {
         if (!userRepository.existsByUsername(user.getUsername())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            if (CollectionUtils.isEmpty(user.getRoles())) {
-                user.setRoles(
-                        Collections.singletonList(roleRepository.findByName("ROLE_USER").orElse(null))
-                );
-            }
+            Role role = isAdmin ? Role.ROLE_ADMIN : Role.ROLE_CLIENT;
+            user.setRoles(Collections.singletonList(role));
             userRepository.save(user);
             return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
         } else {

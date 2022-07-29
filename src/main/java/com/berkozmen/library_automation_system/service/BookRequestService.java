@@ -1,10 +1,13 @@
 package com.berkozmen.library_automation_system.service;
 
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
+import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.dto.BookRequestDTO;
 import com.berkozmen.library_automation_system.model.dto.BookReservationDTO;
+import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.entity.BookRequest;
 import com.berkozmen.library_automation_system.model.entity.BookReservation;
+import com.berkozmen.library_automation_system.model.entity.Status;
 import com.berkozmen.library_automation_system.model.mapper.BookRequestMapper;
 import com.berkozmen.library_automation_system.repository.BookRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +52,26 @@ public class BookRequestService {
         getById(id);
         bookRequestRepository.deleteById(id);
     }
+
+    public BookRequest updateStatus(Long id, Integer status){
+        Optional<BookRequest> byId = bookRequestRepository.findById(id);
+        if(!byId.isPresent()){
+            throw new EntityNotFoundException("Book request");
+        }
+        BookRequest updatedBookRequest = byId.get();
+        switch(status){
+            case 0:
+                updatedBookRequest.setStatus(Status.DENIED);
+                break;
+
+            case 1:
+                updatedBookRequest.setStatus(Status.APPROVED);
+                break;
+
+        }
+        return bookRequestRepository.save(updatedBookRequest);
+    }
+
 
 
 

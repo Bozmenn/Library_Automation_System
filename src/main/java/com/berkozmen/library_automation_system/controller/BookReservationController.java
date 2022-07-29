@@ -20,8 +20,6 @@ public class BookReservationController {
     @Autowired
     private BookReservationService bookReservationService;
 
-    @Autowired
-    private UserService userService;
 
 
     @GetMapping("")
@@ -29,10 +27,9 @@ public class BookReservationController {
         return ResponseEntity.status(HttpStatus.OK).body(bookReservationService.getAllBookReservations());
     }
 
-    @GetMapping("/{user_name}")
-    public ResponseEntity getBookReservationByUserName(@PathVariable(name = "user_name") String user_name){
-        User foundUser = userService.search(user_name);
-        BookReservation byUserId = bookReservationService.getByUserId(foundUser.getId());
+    @GetMapping("/{id}")
+    public ResponseEntity getBookReservationByUserId(@PathVariable(name = "id") Long id){
+        BookReservation byUserId = bookReservationService.getByUserId(id);
         return ResponseEntity.status(HttpStatus.OK).body(byUserId);
     }
 

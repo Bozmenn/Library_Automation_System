@@ -41,12 +41,10 @@ public class UserController {
         user.setUsername(userDataDTO.getUsername());
         user.setEmail(userDataDTO.getEmail());
         user.setPassword(userDataDTO.getPassword());
-//        return userService.signup(modelMapper.map(user, User.class));
-        return userService.signup(user);
+        return userService.signup(user,false);
     }
 
-/*    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RolesAllowed("ROLE_ADMIN")*/
+
     @DeleteMapping(value = "/delete/{username}")
     public String delete(@PathVariable String username) {
         userService.delete(username);

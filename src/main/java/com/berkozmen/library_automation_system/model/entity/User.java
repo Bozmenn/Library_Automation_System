@@ -3,6 +3,7 @@ package com.berkozmen.library_automation_system.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -29,18 +30,19 @@ public class User {
     @Size(min = 5, message = "Minimum password length: 5 characters")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    public List<Role> roles;
-/*    @OneToMany
-    private List<BookRequest> bookRequests;*/
-    @OneToMany
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<BookRequest> bookRequests;
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<BookReservation> bookReservations;
-/*    @OneToMany
-    @JoinColumn(name = "feedback_id", referencedColumnName = "id")
-    private List<BookFeedback> bookFeedbacks;*/
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<BookFeedback> bookFeedbacks;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Role> roles;
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
 }

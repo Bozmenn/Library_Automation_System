@@ -1,6 +1,5 @@
 package com.berkozmen.library_automation_system.model.entity;
 
-import com.berkozmen.library_automation_system.model.Status;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ public class BookRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id",referencedColumnName = "user_id")
     private User user;
     private String RequestedBookTitle;

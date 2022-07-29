@@ -21,15 +21,15 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getBookById/{id}")
     public ResponseEntity getBookById(@PathVariable(name = "id") Long id){
         Book byId = bookService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getById(id));
     }
 
-    @GetMapping("/{title}")
-    public ResponseEntity getBookById(@PathVariable(name = "title") String title){
-        Book byId = bookService.getByTitle(title);
+    @GetMapping("/getBookByTitle/{title}")
+    public ResponseEntity getBookByTitle(@PathVariable(name = "title") String title){
+        Book byTitle = bookService.getByTitle(title);
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getByTitle(title));
     }
 

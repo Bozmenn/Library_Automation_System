@@ -1,5 +1,6 @@
 package com.berkozmen.library_automation_system.controller;
 
+import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.dto.BookRequestDTO;
 import com.berkozmen.library_automation_system.model.dto.BookReservationDTO;
 import com.berkozmen.library_automation_system.model.entity.BookRequest;
@@ -24,6 +25,11 @@ public class BookRequestController {
         return ResponseEntity.status(HttpStatus.OK).body(bookRequestService.getAllBookRequests());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getBookRequestByUserId(@PathVariable(name = "id") Long id){
+        BookRequest byUserId = bookRequestService.getByUserId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(byUserId);
+    }
 
     @PostMapping("/create")
     public ResponseEntity createNewBookRequest(@RequestBody BookRequestDTO bookRequestDTO){
@@ -38,6 +44,15 @@ public class BookRequestController {
     public ResponseEntity deleteBookRequest(@PathVariable(name = "id") Long id){
         bookRequestService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Related book request deleted succesfully");
+    }
+
+    @PutMapping("/update_status/{id}/{status}")
+    public ResponseEntity updateBookRequestStatus(
+            @PathVariable Long id,
+            @PathVariable Integer status)
+    {
+        bookRequestService.updateStatus(id, status);
+        return ResponseEntity.status(HttpStatus.OK).body("Book request succesfully updated");
     }
 
 

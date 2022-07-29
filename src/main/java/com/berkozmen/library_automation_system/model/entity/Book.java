@@ -21,7 +21,6 @@ public class Book {
     private Long id;
     private String title;
     private String author;
-    private int rating;
     private long ISBN;
     private String publisher;
     private Date publishedDate;

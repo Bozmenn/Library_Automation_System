@@ -1,4 +1,4 @@
-package com.berkozmen.library_automation_system.model;
+package com.berkozmen.library_automation_system.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ public enum Status {
 
     DENIED,
     APPROVED,
-    WAITING;
+
 
 
 }

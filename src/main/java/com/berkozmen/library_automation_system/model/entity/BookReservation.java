@@ -15,10 +15,10 @@ public class BookReservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id",referencedColumnName = "user_id")
     private User user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "book_id",referencedColumnName = "book_id")
     private Book book;
     @Column(nullable = false)

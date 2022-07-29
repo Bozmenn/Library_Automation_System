@@ -12,7 +12,6 @@ public class BookMapper {
         bookDTO.setISBN(book.getISBN());
         bookDTO.setPublisher(book.getPublisher());
         bookDTO.setPublishedDate(book.getPublishedDate());
-        bookDTO.setRating(book.getRating());
         return bookDTO;
     }
 
@@ -23,7 +22,6 @@ public class BookMapper {
         book.setISBN(bookDTO.getISBN());
         book.setPublisher(bookDTO.getPublisher());
         book.setPublishedDate(bookDTO.getPublishedDate());
-        book.setRating(bookDTO.getRating());
         return book;
     }
 
