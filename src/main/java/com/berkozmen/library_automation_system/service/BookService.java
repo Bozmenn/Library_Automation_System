@@ -5,13 +5,15 @@ import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.mapper.BookMapper;
 import com.berkozmen.library_automation_system.repository.BookRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class BookService {
 
@@ -25,7 +27,10 @@ public class BookService {
 
     public Book getById(Long id){
        Optional<Book> byId = bookRepository.findById(id);
-       return byId.orElseThrow(()->new EntityNotFoundException("Book"));
+       return byId.orElseThrow(()->{
+           log.error("Related Book cannot find by id");
+           return new EntityNotFoundException("Book");
+       });
     }
 
     public Book getByTitle(String title){
