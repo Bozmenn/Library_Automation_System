@@ -43,7 +43,6 @@ public class BookService {
         Book book = BookMapper.toEntity(bookDTO);
         Book save = bookRepository.save(book);
         return save;
-
     }
 
     public void delete(Long id){
@@ -51,25 +50,10 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public Book update(String title, BookDTO bookDTO){
-        Optional<Book> bookByTitle = bookRepository.findBookByTitle(title);
-        if(!bookByTitle.isPresent()){
-            throw new EntityNotFoundException("Book");
-        }
-        Book updatedBook = bookByTitle.get();
-        if(!StringUtils.isEmpty(bookDTO.getTitle())){
-            updatedBook.setTitle(bookDTO.getTitle());
-        }if(!StringUtils.isEmpty(bookDTO.getAuthor())){
-            updatedBook.setAuthor(bookDTO.getAuthor());
-        }if(!StringUtils.isEmpty(bookDTO.getISBN())){
-            updatedBook.setISBN(bookDTO.getISBN());
-        }if(!StringUtils.isEmpty(bookDTO.getPublisher())){
-            updatedBook.setPublisher(bookDTO.getPublisher());
-        }if(!StringUtils.isEmpty(bookDTO.getPublishedDate())){
-            updatedBook.setPublishedDate(bookDTO.getPublishedDate());
-        }
+    public Book update(Long id, BookDTO bookDTO){
+        getById(id);
+        Book updatedBook = BookMapper.toEntity(bookDTO);
         return bookRepository.save(updatedBook);
-
     }
 
 

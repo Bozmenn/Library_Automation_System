@@ -6,7 +6,10 @@ import com.berkozmen.library_automation_system.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/books")
@@ -48,12 +51,12 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body("Related book deleted succesfully");
     }
 
-    @PutMapping("/update/{title}")
+    @PutMapping("/update/{id}")
     public ResponseEntity updateBook(
-            @PathVariable String title,
-            @RequestBody BookDTO bookDTO)
+            @PathVariable Long id,
+            @Valid @RequestBody BookDTO bookDTO)
     {
-        bookService.update(title, bookDTO);
+        bookService.update(id, bookDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Book succesfully updated");
     }
 

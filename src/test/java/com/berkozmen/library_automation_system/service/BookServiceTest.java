@@ -1,11 +1,14 @@
 package com.berkozmen.library_automation_system.service;
 
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
+import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.entity.Book;
+import com.berkozmen.library_automation_system.model.mapper.BookMapper;
 import com.berkozmen.library_automation_system.repository.BookRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,15 +23,16 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
 
-    @Mock
+    @Mock // mock related instance
     private BookRepository bookRepository;
 
-    @InjectMocks
+    @InjectMocks // injects mocked instances into this instance
     private BookService bookService;
 
 /*    @Before*/
@@ -40,16 +44,16 @@ class BookServiceTest {
 
     @Test
     void getAllBooks() {
-        // init step
-        // JavaFaker kullan
+        // init step (JavaFaker kullan)
         List<Book> expectedBookList = getSampleTestBooks();
 
         //stub - when step
         Mockito.when(bookRepository.findAll()).thenReturn(expectedBookList);
 
-        // then - validate step
+        // then
         List<Book> actualBookList = bookService.getAllBooks();
 
+        // validate step
         Assert.assertEquals(expectedBookList.size(),actualBookList.size());
         // sorted list by ID with a comparator
         expectedBookList = expectedBookList.stream().sorted(getBookComparator()).collect(Collectors.toList());
@@ -59,7 +63,6 @@ class BookServiceTest {
             Book currentActualBook = actualBookList.get(i);
             Assert.assertEquals(currentExpectedBook.getId(),currentActualBook.getId());
             Assert.assertEquals(currentExpectedBook.getAuthor(),currentActualBook.getAuthor());
-
         }
     }
 
@@ -73,8 +76,10 @@ class BookServiceTest {
         // stub - when step
         Mockito.when(bookRepository.findById(any())).thenReturn(optionalExpectedBook);
 
-        // then - validate step
-        Book actualBook = bookService.getById(10L);
+        // then
+        Book actualBook = bookService.getById(any());
+
+        // validate step
         Assert.assertEquals(expectedBook.getId(),actualBook.getId());
 
     }
@@ -83,40 +88,99 @@ class BookServiceTest {
     void getById_NOT_FOUND() {
 
         // stub - when step
-        Mockito.when(bookRepository.findById(1L)).thenReturn(Optional.empty());
+        Mockito.when(bookRepository.findById(any())).thenReturn(Optional.empty());
 
-        // then - validate step
+        // then
+/*
+        defined in validate step
+*/
+
+        // validate
         assertThrows(EntityNotFoundException.class,
-                () -> {Book actualBook = bookService.getById(1L);});
+                () -> {Book actualBook = bookService.getById(any());});
+
     }
 
     @Test
-    void getByTitle() {
+    void getByTitle_successful() {
+
+        // init step
+        Book expectedBook = getSampleTestBooks().get(0);
+        Optional<Book> optionalExpectedBook = Optional.of(expectedBook);
+
+        // stub - when step
+
+        Mockito.when(bookRepository.findBookByTitle(any())).thenReturn(optionalExpectedBook);
+        // then - validate step
+        Book actualBook = bookService.getByTitle(any());
+
+        Assert.assertEquals(expectedBook.getTitle(),actualBook.getTitle());
+
+    }
+
+    @Test
+    void getByTitle_NOT_FOUND() {
 
         // init step
         // stub - when step
-        // then - validate step
+        Mockito.when(bookRepository.findBookByTitle(any())).thenReturn(Optional.empty());
+
+        // then
+        Executable executable = () -> bookService.getByTitle(any());
+
+        // validate step
+        assertThrows(EntityNotFoundException.class,
+                executable);
     }
 
     @Test
     void create() {
         // init step
+        BookDTO bookDTO = new BookDTO();
+        Book expectedBook = BookMapper.toEntity(bookDTO);
+
+
         // stub - when step
-        // then - validate step
+        Mockito.when(bookRepository.save(expectedBook)).thenReturn(expectedBook);
+
+        // then step
+        Book actual = bookService.create(bookDTO);
+
+        // validate step
+        Assert.assertEquals(actual.getId(), expectedBook.getId());
+
     }
 
     @Test
     void delete() {
         // init step
+        Book book = getSampleTestBooks().get(0);
+        Optional<Book> optBook = Optional.of(book);
         // stub - when step
+        Mockito.when(bookRepository.findById(book.getId())).thenReturn(optBook);
+        doNothing().when(bookRepository).deleteById(book.getId());
         // then - validate step
+        bookService.delete(book.getId());
+        Mockito.verify(bookRepository, Mockito.times(1)).deleteById(book.getId());
     }
 
     @Test
     void update() {
         // init step
+        BookDTO bookDTO = new BookDTO(1L,"title1","author4",123456L,"Publisher4","04/10/1997");
+        Book expectedBook = BookMapper.toEntity(bookDTO);
+        Optional<Book> optExpectedBook = Optional.of(expectedBook);
+
         // stub - when step
+        Mockito.when(bookRepository.findById(expectedBook.getId())).thenReturn(optExpectedBook);
+        Mockito.when(bookRepository.save(expectedBook)).thenReturn(expectedBook);
+
         // then - validate step
+        Book actualBook = bookService.update(1L, bookDTO);
+        Assert.assertEquals(actualBook.getId(), expectedBook.getId());
+        Assert.assertEquals(actualBook.getTitle(), expectedBook.getTitle());
+        verify(bookRepository, times(1)).save(actualBook);
+
     }
 
     private List<Book> getSampleTestBooks() {
