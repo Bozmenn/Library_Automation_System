@@ -1,18 +1,13 @@
 package com.berkozmen.library_automation_system.service;
 
-import com.berkozmen.library_automation_system.ObjectExtensions;
+import com.berkozmen.library_automation_system.utils.ObjectExtensions;
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
-import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.dto.BookFeedbackDTO;
 import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.entity.BookFeedback;
 import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.model.mapper.BookFeedbackMapper;
-import com.berkozmen.library_automation_system.model.mapper.BookMapper;
 import com.berkozmen.library_automation_system.repository.BookFeedbackRepository;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

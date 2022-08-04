@@ -23,17 +23,23 @@ public class BookReservationMapper {
 
     public BookReservationDTO toDTO(BookReservation bookReservation){
         BookReservationDTO bookReservationDTO = new BookReservationDTO();
+        bookReservationDTO.setId(bookReservation.getId());
         bookReservationDTO.setUser_id(bookReservation.getUser().getId());
         bookReservationDTO.setBook_id(bookReservation.getBook().getId());
+        bookReservationDTO.setStartDate(bookReservation.getStartDate());
         bookReservationDTO.setEndDatePlanned(bookReservation.getEndDatePlanned());
+        bookReservationDTO.setEndDateActual(bookReservation.getEndDateActual());
         return bookReservationDTO;
     }
 
     public BookReservation toEntity(BookReservationDTO bookReservationDTO){
         BookReservation bookReservation = new BookReservation();
+        bookReservation.setId(bookReservationDTO.getId());
         bookReservation.setUser(userService.getById(bookReservationDTO.getUser_id()));
         bookReservation.setBook(bookService.getById(bookReservationDTO.getBook_id()));
+        bookReservation.setStartDate(bookReservationDTO.getStartDate());
         bookReservation.setEndDatePlanned(bookReservationDTO.getEndDatePlanned());
+        bookReservation.setEndDateActual(bookReservationDTO.getEndDateActual());
         return bookReservation;
     }
 }

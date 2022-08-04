@@ -17,7 +17,6 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
 
     @Size(min = 5, max = 25, message = "username length should be between 5 and 25 characters")

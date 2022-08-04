@@ -1,4 +1,4 @@
-package com.berkozmen.library_automation_system;
+package com.berkozmen.library_automation_system.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

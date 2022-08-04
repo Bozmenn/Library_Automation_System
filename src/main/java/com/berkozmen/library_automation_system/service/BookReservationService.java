@@ -57,14 +57,9 @@ public class BookReservationService {
     }
 
     public BookReservation update(Long id, BookReservationDTO bookReservationDTO){
-        BookReservation updatedBookReservation = getById(id);
-        if(!StringUtils.isEmpty(bookReservationDTO.getBook_id())) {
-            updatedBookReservation.setBook(bookService.getById(bookReservationDTO.getBook_id()));
-        }if(!StringUtils.isEmpty(bookReservationDTO.getEndDatePlanned())) {
-            updatedBookReservation.setEndDatePlanned(bookReservationDTO.getEndDatePlanned());
-        }
+        getById(id);
+        BookReservation updatedBookReservation = bookReservationMapper.toEntity(bookReservationDTO);
         return bookReservationRepository.save(updatedBookReservation);
-
     }
 
 

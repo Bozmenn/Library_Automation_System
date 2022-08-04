@@ -8,19 +8,18 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "bookFeedbacks")
+@Table(name = "Book_Feedbacks")
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookFeedback {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "book_id",referencedColumnName = "book_id")
+    @JoinColumn(name = "book_id",referencedColumnName = "id")
     private Book book;
     private String feedback;
 

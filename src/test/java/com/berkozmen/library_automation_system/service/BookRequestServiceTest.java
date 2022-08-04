@@ -1,14 +1,11 @@
 package com.berkozmen.library_automation_system.service;
 
-import com.berkozmen.library_automation_system.ObjectExtensions;
+import com.berkozmen.library_automation_system.utils.ObjectExtensions;
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
-import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.dto.BookRequestDTO;
-import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.entity.BookRequest;
 import com.berkozmen.library_automation_system.model.entity.Status;
 import com.berkozmen.library_automation_system.model.entity.User;
-import com.berkozmen.library_automation_system.model.mapper.BookMapper;
 import com.berkozmen.library_automation_system.model.mapper.BookRequestMapper;
 import com.berkozmen.library_automation_system.repository.BookRequestRepository;
 import org.junit.Assert;
