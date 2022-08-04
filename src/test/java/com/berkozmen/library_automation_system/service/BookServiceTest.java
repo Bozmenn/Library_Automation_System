@@ -1,10 +1,13 @@
 package com.berkozmen.library_automation_system.service;
 
+import com.berkozmen.library_automation_system.ObjectExtensions;
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
 import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.mapper.BookMapper;
 import com.berkozmen.library_automation_system.repository.BookRepository;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.ArrayList;
@@ -25,9 +29,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
+// ctrl + shift + T create test class form service class
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
+
 
     @Mock // mock related instance
     private BookRepository bookRepository;
@@ -35,25 +40,24 @@ class BookServiceTest {
     @InjectMocks // injects mocked instances into this instance
     private BookService bookService;
 
-/*    @Before*/
-
-/*    @BeforeEach
-    public void setup(){
-
-    }*/
 
     @Test
     void getAllBooks() {
         // init step (JavaFaker kullan)
         List<Book> expectedBookList = getSampleTestBooks();
+        String expectedListJSON = ObjectExtensions.toJson(expectedBookList);
 
         //stub - when step
         Mockito.when(bookRepository.findAll()).thenReturn(expectedBookList);
 
         // then
         List<Book> actualBookList = bookService.getAllBooks();
+        String actualListJSON = ObjectExtensions.toJson(actualBookList);
 
         // validate step
+        Assert.assertEquals(actualListJSON,expectedListJSON);
+        verify(bookRepository,times(1)).findAll();
+/*
         Assert.assertEquals(expectedBookList.size(),actualBookList.size());
         // sorted list by ID with a comparator
         expectedBookList = expectedBookList.stream().sorted(getBookComparator()).collect(Collectors.toList());
@@ -63,7 +67,7 @@ class BookServiceTest {
             Book currentActualBook = actualBookList.get(i);
             Assert.assertEquals(currentExpectedBook.getId(),currentActualBook.getId());
             Assert.assertEquals(currentExpectedBook.getAuthor(),currentActualBook.getAuthor());
-        }
+        }*/
     }
 
     @Test
@@ -72,15 +76,17 @@ class BookServiceTest {
         // init step
         Book expectedBook = getSampleTestBooks().get(0);
         Optional<Book> optionalExpectedBook = Optional.of(expectedBook);
+        String expectedBookJSON = ObjectExtensions.toJson(expectedBook);
 
         // stub - when step
         Mockito.when(bookRepository.findById(any())).thenReturn(optionalExpectedBook);
 
         // then
         Book actualBook = bookService.getById(any());
+        String actualBookJSON = ObjectExtensions.toJson(actualBook);
 
         // validate step
-        Assert.assertEquals(expectedBook.getId(),actualBook.getId());
+        Assert.assertEquals(expectedBookJSON,actualBookJSON);
 
     }
 
@@ -107,14 +113,16 @@ class BookServiceTest {
         // init step
         Book expectedBook = getSampleTestBooks().get(0);
         Optional<Book> optionalExpectedBook = Optional.of(expectedBook);
+        String expectedBookJSON = ObjectExtensions.toJson(expectedBook);
 
         // stub - when step
 
         Mockito.when(bookRepository.findBookByTitle(any())).thenReturn(optionalExpectedBook);
         // then - validate step
         Book actualBook = bookService.getByTitle(any());
+        String actualBookJSON = ObjectExtensions.toJson(actualBook);
 
-        Assert.assertEquals(expectedBook.getTitle(),actualBook.getTitle());
+        Assert.assertEquals(expectedBookJSON,actualBookJSON);
 
     }
 
@@ -138,16 +146,17 @@ class BookServiceTest {
         // init step
         BookDTO bookDTO = new BookDTO();
         Book expectedBook = BookMapper.toEntity(bookDTO);
-
+        String exepctedBookJSON = ObjectExtensions.toJson(expectedBook);
 
         // stub - when step
         Mockito.when(bookRepository.save(expectedBook)).thenReturn(expectedBook);
 
         // then step
-        Book actual = bookService.create(bookDTO);
+        Book actualBook = bookService.create(bookDTO);
+        String actualBookJSON = ObjectExtensions.toJson(actualBook);
 
         // validate step
-        Assert.assertEquals(actual.getId(), expectedBook.getId());
+        Assert.assertEquals(actualBookJSON, exepctedBookJSON);
 
     }
 
@@ -169,6 +178,7 @@ class BookServiceTest {
         // init step
         BookDTO bookDTO = new BookDTO(1L,"title1","author4",123456L,"Publisher4","04/10/1997");
         Book expectedBook = BookMapper.toEntity(bookDTO);
+        String expectedBookJSON = ObjectExtensions.toJson(expectedBook);
         Optional<Book> optExpectedBook = Optional.of(expectedBook);
 
         // stub - when step
@@ -177,8 +187,9 @@ class BookServiceTest {
 
         // then - validate step
         Book actualBook = bookService.update(1L, bookDTO);
-        Assert.assertEquals(actualBook.getId(), expectedBook.getId());
-        Assert.assertEquals(actualBook.getTitle(), expectedBook.getTitle());
+        String actualBookJSON = ObjectExtensions.toJson(actualBook);
+
+        Assert.assertEquals(actualBookJSON, expectedBookJSON);
         verify(bookRepository, times(1)).save(actualBook);
 
     }
@@ -195,7 +206,7 @@ class BookServiceTest {
     }
 
     //ctrl + alt + M change duplicate code to new method.
-    private Comparator<Book> getBookComparator() {
+/*    private Comparator<Book> getBookComparator() {
         return (o1, o2) -> {
             if (o1.getId() - o2.getId() > 0)
                 return -1;
@@ -203,5 +214,6 @@ class BookServiceTest {
                 return 0;
             return 1;
         };
-    }
+    }*/
+
 }

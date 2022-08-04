@@ -1,12 +1,16 @@
 package com.berkozmen.library_automation_system.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "bookFeedbacks")
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookFeedback {
     @Id
     @Column(name = "id", nullable = false)
