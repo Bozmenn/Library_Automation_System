@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class BookDTO {
 
-    @NotNull
+
     private Long id;
     @NotBlank
     private String title;
