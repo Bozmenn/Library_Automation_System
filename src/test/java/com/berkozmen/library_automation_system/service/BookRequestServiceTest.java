@@ -4,7 +4,7 @@ import com.berkozmen.library_automation_system.utils.ObjectExtensions;
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
 import com.berkozmen.library_automation_system.model.dto.BookRequestDTO;
 import com.berkozmen.library_automation_system.model.entity.BookRequest;
-import com.berkozmen.library_automation_system.model.entity.Status;
+import com.berkozmen.library_automation_system.model.Status;
 import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.model.mapper.BookRequestMapper;
 import com.berkozmen.library_automation_system.repository.BookRequestRepository;

@@ -40,9 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/books/delete/{id}").hasRole("ADMIN")
                 .antMatchers("/books/update/{title}").hasRole("ADMIN")
                 .antMatchers("/users/delete/{username}").hasRole("ADMIN")
-                .antMatchers("/bookRequests//update_status/{id}/{status}").hasRole("ADMIN")
+                .antMatchers("/bookRequests//update_status/{id}/{status}").hasRole("ADMIN");
                 // Disallow everything else..
-                .anyRequest().authenticated();
+                //.anyRequest().authenticated();
 
         // Apply JWT
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));

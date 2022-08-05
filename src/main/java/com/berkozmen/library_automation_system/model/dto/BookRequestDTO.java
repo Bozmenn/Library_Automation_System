@@ -1,6 +1,6 @@
 package com.berkozmen.library_automation_system.model.dto;
 
-import com.berkozmen.library_automation_system.model.entity.Status;
+import com.berkozmen.library_automation_system.model.Status;
 import lombok.Data;
 
 import javax.persistence.EnumType;

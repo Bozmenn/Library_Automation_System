@@ -1,4 +1,4 @@
-package com.berkozmen.library_automation_system.model.entity;
+package com.berkozmen.library_automation_system.model;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

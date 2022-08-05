@@ -2,7 +2,7 @@ package com.berkozmen.library_automation_system.service;
 
 import com.berkozmen.library_automation_system.exception.CustomJwtException;
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
-import com.berkozmen.library_automation_system.model.entity.Role;
+import com.berkozmen.library_automation_system.model.Role;
 import com.berkozmen.library_automation_system.model.entity.User;
 import com.berkozmen.library_automation_system.repository.UserRepository;
 import com.berkozmen.library_automation_system.security.JwtTokenProvider;

@@ -1,6 +1,6 @@
 package com.berkozmen.library_automation_system.model.dto;
 
-import com.berkozmen.library_automation_system.model.entity.Role;
+import com.berkozmen.library_automation_system.model.Role;
 
 import lombok.Data;
 

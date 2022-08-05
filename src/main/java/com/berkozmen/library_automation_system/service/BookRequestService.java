@@ -1,18 +1,13 @@
 package com.berkozmen.library_automation_system.service;
 
 import com.berkozmen.library_automation_system.exception.EntityNotFoundException;
-import com.berkozmen.library_automation_system.model.dto.BookDTO;
 import com.berkozmen.library_automation_system.model.dto.BookRequestDTO;
-import com.berkozmen.library_automation_system.model.dto.BookReservationDTO;
-import com.berkozmen.library_automation_system.model.entity.Book;
 import com.berkozmen.library_automation_system.model.entity.BookRequest;
-import com.berkozmen.library_automation_system.model.entity.BookReservation;
-import com.berkozmen.library_automation_system.model.entity.Status;
+import com.berkozmen.library_automation_system.model.Status;
 import com.berkozmen.library_automation_system.model.mapper.BookRequestMapper;
 import com.berkozmen.library_automation_system.repository.BookRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
